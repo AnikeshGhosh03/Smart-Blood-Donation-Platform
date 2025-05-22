@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        /* Import Font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #240000fe, #6b0000fe);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        /* Dashboard Container */
+        .dashboard {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            width: 400px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 30px rgba(255, 255, 255, 0.2);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Fade-In Effect */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        h2 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        /* Navigation Button */
+        .home-btn {
+            display: inline-block;
+            padding: 10px 18px;
+            font-size: 14px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff4d4d, #ff7300);
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .home-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0px 5px 15px rgba(255, 77, 77, 0.5);
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.4s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: 0.4s ease-in-out;
+        }
+
+        .card:hover:before {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 10px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Card Colors */
+        .donor { border-left: 5px solid #ff4d4d; }
+        .blood { border-left: 5px solid #00e1ff; }
+        .camp  { border-left: 5px solid #ff7300; }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard">
+        <a href="index.html" class="home-btn">🏠 Home</a>
+        <h2>Admin Dashboard</h2>
+
+        <div class="card donor" onclick="location.href='donor-management.html'">
+            <h3>Donor Management</h3>
+            <p>Manage blood donors & records.</p>
+        </div>
+
+        <div class="card blood" onclick="location.href='blood-request.html'">
+            <h3>Blood Requests</h3>
+            <p>View and approve blood requests.</p>
+        </div>
+
+        <div class="card camp" onclick="location.href='add-camp.html'">
+            <h3>Add Blood Camps</h3>
+            <p>Organize and manage donation camps.</p>
+        </div>
+    </div>
+
+</body>
+</html>

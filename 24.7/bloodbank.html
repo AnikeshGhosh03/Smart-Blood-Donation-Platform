@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Your Blood Bank</title>
+    <style>
+        /* Import Font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #000428, #004e92);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+
+        /* Container */
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            width: 450px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 30px rgba(255, 255, 255, 0.2);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Fade-In Effect */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        h2 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            color: #ff4d4d;
+        }
+
+        /* Form Fields */
+        label {
+            font-weight: bold;
+            display: block;
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+            transition: 0.3s ease-in-out;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #ff4d4d;
+            box-shadow: 0px 0px 8px rgba(255, 77, 77, 0.5);
+        }
+
+        /* Blood Type Checkbox */
+        .blood-types {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            text-align: left;
+        }
+
+        .blood-types label {
+            font-weight: normal;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Submit Button */
+        button {
+            width: 100%;
+            background: linear-gradient(45deg, #ff4d4d, #ff7300);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+            border-radius: 8px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 5px 15px rgba(255, 77, 77, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Add Your Blood Bank</h2>
+        <form id="bloodBankForm">
+            <label for="name">Blood Bank Name</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location" required>
+
+            <label for="contact">Contact Number</label>
+            <input type="tel" id="contact" name="contact" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="hours">Operating Hours</label>
+            <input type="text" id="hours" name="hours" placeholder="e.g. 9 AM - 6 PM" required>
+
+            <label>Available Blood Types</label>
+            <div class="blood-types">
+                <label><input type="checkbox" name="bloodTypes" value="A+"> A+</label>
+                <label><input type="checkbox" name="bloodTypes" value="A-"> A-</label>
+                <label><input type="checkbox" name="bloodTypes" value="B+"> B+</label>
+                <label><input type="checkbox" name="bloodTypes" value="B-"> B-</label>
+                <label><input type="checkbox" name="bloodTypes" value="O+"> O+</label>
+                <label><input type="checkbox" name="bloodTypes" value="O-"> O-</label>
+                <label><input type="checkbox" name="bloodTypes" value="AB+"> AB+</label>
+                <label><input type="checkbox" name="bloodTypes" value="AB-"> AB-</label>
+            </div>
+
+            <button type="submit">Submit Blood Bank</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('bloodBankForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            let name = document.getElementById('name').value;
+            let location = document.getElementById('location').value;
+            let contact = document.getElementById('contact').value;
+            let email = document.getElementById('email').value;
+            let hours = document.getElementById('hours').value;
+            let bloodTypes = Array.from(document.querySelectorAll('input[name="bloodTypes"]:checked')).map(cb => cb.value);
+
+            if (bloodTypes.length === 0) {
+                alert("Please select at least one available blood type.");
+                return;
+            }
+
+            let bloodBankData = {
+                name: name,
+                location: location,
+                contact: contact,
+                email: email,
+                hours: hours,
+                bloodTypes: bloodTypes
+            };
+
+            console.log("Blood Bank Submitted:", bloodBankData);
+            alert("Blood Bank Successfully Submitted!");
+
+            document.getElementById('bloodBankForm').reset();
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile App (Beta) - e-RaktKosh</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #000428, #004e92);vv
+            color: #333;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            color: #ffffff;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .app-content {
+           
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #ffffff;
+        }
+
+        .app-img {
+            width: 100%;
+            max-width: 500px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.0);
+        }
+
+        .download-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 20px;
+            font-size: 18px;
+            color: white;
+            background-color: #ff3300dc;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .download-btn:hover {
+            background-color: #a30000;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 2em;
+            }
+
+            p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Mobile App (Beta)</h2>
+        <div class="app-content">
+            <p>
+                We are excited to introduce the <b>LifeFlow Mobile App (Beta)</b> – a faster,  
+                more convenient way to <b>find blood donors, register as a donor, and stay updated</b>  
+                with upcoming blood donation camps.
+            </p>
+            <p>
+                Currently in <b>prototype mode</b>, we are working on making the app better with  
+                real-time updates and seamless blood donor connections. Download now and be a part of the change!
+            </p>
+            
+            <img src="app-preview.jpg" alt="e-RaktKosh App Preview" class="app-img">
+            
+            <!-- Download Button (Link to the App File) -->
+            <a href="app.apk" class="download-btn" download>Download for PC</a>
+        </div>
+    </div>
+
+</body>
+</html>

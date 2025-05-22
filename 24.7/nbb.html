@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nearest Blood Bank (BB)/Blood Storage Unit (BSU)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #aa2710;
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+        header button {
+            padding: 8px 15px;
+            background-color: #aa2710;
+            color: white;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        header button:hover {
+            background-color: #aa2710;
+        }
+        .search-container {
+            margin: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .search-container input {
+            padding: 10px;
+            width: 200px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .search-container button {
+            padding: 10px;
+            background-color: #aa2710;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .search-container button:hover {
+            background-color: #aa2710;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #aa2710;
+            color: white;
+        }
+        .btn-call {
+            background-color: #aa2710;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .btn-call:hover {
+            background-color: #aa2710;
+        }
+        .distance {
+            font-weight: bold;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <button onclick="window.location.href='1.html'">Home</button>
+    <h1>Nearest Blood Bank (BB)/Blood Storage Unit (BSU)</h1>
+</header>
+
+<div class="search-container">
+    <input type="text" id="location" placeholder="Enter Location (e.g., Kolkata)" />
+    <button onclick="searchNearestBloodBank()">Search Nearest</button>
+</div>
+
+<table id="nearestBloodBanksTable">
+    <thead>
+        <tr>
+            <th>Blood Bank Name</th>
+            <th>Location</th>
+            <th>Contact Number</th>
+            <th>Blood Type Available</th>
+            <th>Availability</th>
+            <th>Type (BB/BSU)</th>
+            <th>Distance</th>
+            <th>Call</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr data-lat="22.5525" data-lon="88.4375">
+            <td>Fortis Hospital Ltd.</td>
+            <td>730, Anandpur, EM Bypass, Kolkata</td>
+            <td>8585030368</td>
+            <td>B+</td>
+            <td>Available</td>
+            <td>Blood Bank (BB)</td>
+            <td class="distance"></td>
+            <td><button class="btn-call" onclick="callBloodBank('8585030368')">Call</button></td>
+        </tr>
+        <tr data-lat="22.5096" data-lon="88.4447">
+            <td>Medica Superspecialty Hospital</td>
+            <td>127, Mukundapur, EM Bypass, Kolkata</td>
+            <td>9831082013</td>
+            <td>A-</td>
+            <td>Not Available</td>
+            <td>Blood Storage Unit (BSU)</td>
+            <td class="distance"></td>
+            <td><button class="btn-call" onclick="callBloodBank('9831082013')">Call</button></td>
+        </tr>
+        <tr data-lat="22.5531" data-lon="88.3663">
+            <td>AMRI Hospitals</td>
+            <td>211, Kingsway, Kolkata</td>
+            <td>9831159656</td>
+            <td>O+</td>
+            <td>Available</td>
+            <td>Blood Bank (BB)</td>
+            <td class="distance"></td>
+            <td><button class="btn-call" onclick="callBloodBank('9831159656')">Call</button></td>
+        </tr>
+        <tr data-lat="22.5582" data-lon="88.3697">
+            <td>Ruby General Hospital</td>
+            <td>1560, Rajdanga Main Road, Kolkata</td>
+            <td>9830496544</td>
+            <td>AB+</td>
+            <td>Available</td>
+            <td>Blood Bank (BB)</td>
+            <td class="distance"></td>
+            <td><button class="btn-call" onclick="callBloodBank('9830496544')">Call</button></td>
+        </tr>
+        <tr data-lat="22.5726" data-lon="88.3651">
+            <td>Calcutta National Medical College</td>
+            <td>29, Gariahat Road, Kolkata</td>
+            <td>9002078345</td>
+            <td>A+</td>
+            <td>Available</td>
+            <td>Blood Bank (BB)</td>
+            <td class="distance"></td>
+            <td><button class="btn-call" onclick="callBloodBank('9002078345')">Call</button></td>
+        </tr>
+        <tr data-lat="22.5281" data-lon="88.3424">
+            <td>R.N. Tagore International Institute of Cardiac Sciences</td>
+            <td>124, Mukundapur, Kolkata</td>
+            <td>9830181092</td>
+            <td>B-</td>
+            <td>Not Available</td>
+            <td>Blood Storage Unit (BSU)</td>
+            <td class="distance"></td>
+            <td><button class="btn-call" onclick="callBloodBank('9830181092')">Call</button></td>
+        </tr>
+        <tr data-lat="22.5186" data-lon="88.3597">
+            <td>Peerless Hospital & B.K. Roy Research Centre</td>
+            <td>360, Panchasayar, Kolkata</td>
+            <td>9433095201</td>
+            <td>AB-</td>
+            <td>Available</td>
+            <td>Blood Bank (BB)</td>
+            <td class="distance"></td>
+            <td><button class="btn-call" onclick="callBloodBank('9433095201')">Call</button></td>
+        </tr>
+        <tr data-lat="22.5335" data-lon="88.3885">
+            <td>Shree Harsha Blood Bank</td>
+            <td>Jadavpur, Kolkata</td>
+            <td>9832063782</td>
+            <td>O-</td>
+            <td>Available</td>
+            <td>Blood Bank (BB)</td>
+            <td class="distance"></td>
+            <td><button class="btn-call" onclick="callBloodBank('9832063782')">Call</button></td>
+        </tr>
+        <tr data-lat="22.5653" data-lon="88.3832">
+            <td>Rabindranath Tagore International Institute of Cardiac Sciences</td>
+            <td>124, Mukundapur, Kolkata</td>
+            <td>9831923421</td>
+            <td>O+</td>
+            <td>Available</td>
+            <td>Blood Bank (BB)</td>
+            <td class="distance"></td>
+            <td><button class="btn-call" onclick="callBloodBank('9831923421')">Call</button></td>
+        </tr>
+        <!-- More blood banks can be added here -->
+    </tbody>
+</table>
+
+<script>
+    // Function to calculate distance using Haversine formula
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371; // Radius of the Earth in kilometers
+        const dLat = toRadians(lat2 - lat1);
+        const dLon = toRadians(lon2 - lon1);
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c; // Distance in kilometers
+    }
+
+    // Convert degrees to radians
+    function toRadians(degrees) {
+        return degrees * (Math.PI / 180);
+    }
+
+    // Function to fetch user location and display distances
+    function getUserLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showUserLocation, handleError);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+
+    // Show the user's location on the table and sort by distance
+    function showUserLocation(position) {
+        const userLat = position.coords.latitude;
+        const userLon = position.coords.longitude;
+        const rows = document.querySelectorAll("#nearestBloodBanksTable tbody tr");
+
+        let bloodBanks = [];
+
+        rows.forEach(row => {
+            const lat = parseFloat(row.getAttribute("data-lat"));
+            const lon = parseFloat(row.getAttribute("data-lon"));
+            const distance = calculateDistance(userLat, userLon, lat, lon);
+            const distanceCell = row.querySelector(".distance");
+            distanceCell.textContent = `${distance.toFixed(2)} km`;
+
+            bloodBanks.push({
+                row: row,
+                distance: distance
+            });
+        });
+
+        // Sort the blood banks by distance
+        bloodBanks.sort((a, b) => a.distance - b.distance);
+
+        // Reorder the rows in the table
+        const tbody = document.querySelector("#nearestBloodBanksTable tbody");
+        tbody.innerHTML = '';
+        bloodBanks.forEach(bloodBank => {
+            tbody.appendChild(bloodBank.row);
+        });
+    }
+
+    // Handle geolocation errors
+    function handleError(error) {
+        alert("Error occurred while fetching location. Please try again.");
+    }
+
+    // Function to search nearest blood bank based on location
+    function searchNearestBloodBank() {
+        var locationInput = document.getElementById("location").value.toLowerCase();
+        var table = document.getElementById("nearestBloodBanksTable");
+        var rows = table.getElementsByTagName("tr");
+
+        for (var i = 1; i < rows.length; i++) {
+            var td = rows[i].getElementsByTagName("td")[1]; // Location column
+            if (td) {
+                var locationText = td.textContent || td.innerText;
+                if (locationText.toLowerCase().includes(locationInput)) {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    // Initialize the page by getting the user's location
+    getUserLocation();
+</script>
+</body>
+</html>

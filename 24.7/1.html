@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professional Website</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+      color: #333;
+      position: relative;
+    }
+
+    /* Navigation Menu */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #800000; /* Maroon Background */
+      z-index: 1000; /* Keep the menu above the content */
+      padding: 20px 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    nav ul li {
+      display: inline-block;
+      position: relative;
+      margin: 0 20px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      padding: 10px 15px;
+      display: block;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      background-color: #a30000; /* Darker Maroon on hover */
+      color: #fff;
+    }
+
+    /* Dropdown Menu */
+    nav ul li .dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #800000;
+      width: 180px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    nav ul li:hover .dropdown {
+      display: block;
+    }
+
+    nav ul li .dropdown li {
+      display: block;
+    }
+
+    nav ul li .dropdown li a {
+      padding: 10px 15px;
+    }
+
+    /* Sliding Image Section */
+.slider {
+  position: relative;
+  width: 100%;
+  height: 450px; /* Increased from 400px to 500px */
+  overflow: hidden;
+  margin-top: 60px; /* Space below the fixed nav */
+}
+
+.slider img {
+  width: 100%;
+  height: 400px; /* Increased from 400px to 500px */
+  object-fit: cover;
+  position: absolute;
+  animation: slide 12s infinite;
+}
+
+
+    .slider img:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .slider img:nth-child(2) {
+      animation-delay: 4s;
+    }
+
+    .slider img:nth-child(3) {
+      animation-delay: 8s;
+    }
+
+    @keyframes slide {
+      0% { opacity: 0; }
+      10% { opacity: 1; }
+      30% { opacity: 1; }
+      40% { opacity: 0; }
+      100% { opacity: 0; }
+    }
+
+    /* Cards Section */
+    .cards {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 40px 20px;
+      flex-wrap: wrap;
+    }
+
+    .top-cards {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      width: 100%;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      width: 300px;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      color: white;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .card h3 {
+      margin-top: 0;
+    }
+
+    .card1 {
+      background-color: #FF6347; /* Tomato Red */
+    }
+
+    .card2 {
+      background-color: #4682B4; /* Steel Blue */
+    }
+
+    .card3 {
+      background-color: #32CD32; /* Lime Green */
+    }
+
+    .card4 {
+      background-color: #FFD700; /* Gold */
+    }
+
+    .card5 {
+      background-color: #FF69B4; /* Hot Pink */
+    }
+
+    .card6 {
+      background-color: #8A2BE2; /* Blue Violet */
+    }
+
+    .card7 {
+      background-color: #20B2AA; /* Light Sea Green */
+    }
+
+    /* Donation Section */
+    .donation-section {
+      padding: 50px 20px;
+      background-color: #f9f9f9;
+      text-align: center;
+    }
+
+    .donation-section h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #800000;
+    }
+
+    .donation-section p {
+      font-size: 18px;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    table {
+      width: 80%;
+      margin: 0 auto;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+    }
+
+    table, th, td {
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th, td {
+      padding: 15px;
+    }
+
+    th {
+      background-color: #800000;
+      color: white;
+    }
+
+    td {
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Menu -->
+  <nav>
+    <ul>
+      <li style="position: absolute; left: 25px; top: 17px; font-size: 30px; color: white; font-weight: bold;">
+        🩸 LifeFlow
+      </li>
+      <li><a href="#">Home</a></li>
+      <li>
+        <a href="#">About</a>
+        <ul class="dropdown">
+          <li><a href="team.html">Our Team</a></li>
+          <li><a href="mission.html">Mission</a></li>
+          <li><a href="app.html">Mobile App(Beta)</a></li>
+          <li><a href="ai.html">FAQs</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">Looking For Blood</a>
+        <ul class="dropdown">
+          <li><a href="bloodavailable.html">Blood Availability</a></li>
+          <li><a href="nbb.html">Blood Bank Directory</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">Want To Donate Blood</a>
+        <ul class="dropdown">
+          <li><a href="camp.html">Blood Donation Camp</a></li>
+          <li><a href="donorlogin.html">Donor Login</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">Blood Bank Login</a>
+        <ul class="dropdown">
+          <li><a href="admin.html">LifeFlow Login</a></li>
+          <li><a href="bloodbank.html">Add Your Blood Bank</a></li>
+        </ul>
+    </ul>
+  </nav>
+
+  <!-- Sliding Image Section -->
+  <div class="slider">
+    <img class="slide" src="49.jpg" alt="Slide 1">
+    <img class="slide" src="48.jpg" alt="Slide 2">
+    <img class="slide" src="https://eraktkosh.mohfw.gov.in/BLDAHIMS/bloodbank/transactions/assets/webp/thankublooddonors.png" alt="Slide 3">
+  </div>
+
+  <!-- Cards Section -->
+  <div class="top-cards">
+    <div class="card card1">
+      
+      <p><span id="donorCount">0</span> donors have registered</p>
+      <h3>Donors Registered</h3>
+    </div>
+    
+    <div class="card card2">
+      
+      <p><span id="bloodCount">0</span> units collected</p>
+      <h3>Blood Units Collected</h3>
+    </div>
+    
+  </div>
+
+  <div class="cards">
+    <div class="card card3" onclick="window.location.href='bloodavailable.html';">
+      <h1>Blood Availability Sreach</h1>
+    </div>
+    <div class="card card4" onclick="window.location.href='nbb.html';">
+      <h1>Blood Bank Directiory</h1>
+    </div>
+    <div class="card card5" onclick="window.location.href='camp.html';">
+      <h1>Blood Donation Camps</h1>
+    </div>
+    <div class="card card6" onclick="window.location.href='donorlogin.html';">
+      <h1>Donor Login</h1>
+    </div>
+  </div>
+
+  <!-- Learn About Donation Section -->
+  <div class="donation-section">
+    <h2>Learn About Donation</h2>
+    <p><strong>One Donation Can Save Up To Three Lives</strong><br>
+      After donating blood, the body works to replenish the blood loss. This stimulates the production of new blood cells and in turn, helps in maintaining good health.
+    </p>
+    
+    <h3>Compatible Blood Type Donors</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Blood Type</th>
+          <th>Donate Blood To</th>
+          <th>Receive Blood From</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>A+</td>
+          <td>A+, AB+</td>
+          <td>A+, A-, O+, O-</td>
+        </tr>
+        <tr>
+          <td>O+</td>
+          <td>O+, A+, B+, AB+</td>
+          <td>O+, O-</td>
+        </tr>
+        <tr>
+          <td>B+</td>
+          <td>B+, AB+</td>
+          <td>B+, B-, O+, O-</td>
+        </tr>
+        <tr>
+          <td>AB+</td>
+          <td>AB+</td>
+          <td>Everyone</td>
+        </tr>
+        <tr>
+          <td>A-</td>
+          <td>A+, A-, AB+, AB-</td>
+          <td>A-, O-</td>
+        </tr>
+        <tr>
+          <td>O-</td>
+          <td>Everyone</td>
+          <td>O-</td>
+        </tr>
+        <tr>
+          <td>B-</td>
+          <td>B+, B-, AB+, AB-</td>
+          <td>B-, O-</td>
+        </tr>
+        <tr>
+          <td>AB-</td>
+          <td>AB+, AB-</td>
+          <td>AB-, A-, B-, O-</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    function animateCount(element, start, end, duration) {
+    let range = end - start;
+    let current = start;
+    let increment = end > start ? 1 : -1;
+    let stepTime = Math.abs(Math.floor(duration / range));
+    
+    let timer = setInterval(() => {
+      current += increment;
+      element.textContent = current;
+      if (current == end) {
+        clearInterval(timer);
+      }
+    }, stepTime);
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    let donorCountElement = document.getElementById("donorCount");
+    let bloodCountElement = document.getElementById("bloodCount");
+    
+    let totalDonors = 10; // Fetch dynamically if needed
+    let totalBloodUnits = 85; // Fetch dynamically if needed
+
+    animateCount(donorCountElement, 0, totalDonors, 2000);
+    animateCount(bloodCountElement, 0, totalBloodUnits, 2000);
+  });
+  </script>
+  
+
+</body>
+</html>

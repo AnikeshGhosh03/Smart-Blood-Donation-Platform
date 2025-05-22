@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Blood Camp</title>
+    <style>
+        /* Import Font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #000428, #004e92);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Container */
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            width: 400px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 30px rgba(255, 255, 255, 0.2);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Fade-In Effect */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        h2 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            color: #ff4d4d;
+        }
+
+        /* Form Fields */
+        .form-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: 0.3s ease-in-out;
+        }
+
+        input:focus {
+            border-color: #ff4d4d;
+            box-shadow: 0px 0px 8px rgba(255, 77, 77, 0.5);
+        }
+
+        /* Submit Button */
+        button {
+            width: 100%;
+            background: linear-gradient(45deg, #ff4d4d, #ff7300);
+            color: white;
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 5px 15px rgba(255, 77, 77, 0.5);
+        }
+
+        /* Navigation Button */
+        .home-btn {
+            display: inline-block;
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .home-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        function addCamp(event) {
+            event.preventDefault();
+
+            let name = document.getElementById("campName").value;
+            let district = document.getElementById("district").value;
+            let date = document.getElementById("date").value;
+            let venue = document.getElementById("venue").value;
+
+            if (!name || !district || !date || !venue) {
+                alert("All fields are required!");
+                return;
+            }
+
+            let camp = { name, district, date, venue };
+            let camps = JSON.parse(localStorage.getItem('bloodCamps')) || [];
+            camps.push(camp);
+            localStorage.setItem('bloodCamps', JSON.stringify(camps));
+
+            alert("Blood Camp added successfully!");
+            document.getElementById("campForm").reset();
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <a href="admin-dashboard.html" class="home-btn">🏠 Back to Admin</a>
+        <h2>Add Blood Donation Camp</h2>
+        <form id="campForm" onsubmit="addCamp(event)">
+            <div class="form-group">
+                <label for="campName">Camp Name:</label>
+                <input type="text" id="campName" required>
+            </div>
+            <div class="form-group">
+                <label for="district">District:</label>
+                <input type="text" id="district" required>
+            </div>
+            <div class="form-group">
+                <label for="date">Date:</label>
+                <input type="date" id="date" required>
+            </div>
+            <div class="form-group">
+                <label for="venue">Venue:</label>
+                <input type="text" id="venue" required>
+            </div>
+            <button type="submit">Add Camp</button>
+        </form>
+    </div>
+
+</body>
+</html>

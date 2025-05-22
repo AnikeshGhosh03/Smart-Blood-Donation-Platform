@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Mission - e-RaktKosh</title>
+    <style>
+        /* Import Font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #000428, #004e92);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        /* Container */
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 30px rgba(255, 255, 255, 0.2);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Fade-In Effect */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-size: 26px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            color: #ff4d4d;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: white;
+            opacity: 0.9;
+        }
+
+        /* Bold Style */
+        .highlight {
+            font-weight: bold;
+            color: #ffcccb;
+        }
+
+        /* Image */
+        .mission-img {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .mission-img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 22px;
+            }
+
+            p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Our Mission</h2>
+        <p>
+            Our mission at <b>LifeFlow</b> is to create a <span class="highlight">seamless and efficient blood donation ecosystem</span>.  
+            We strive to ensure that <span class="highlight">no one suffers due to the unavailability of blood</span> by bridging the gap  
+            between donors and those in need.
+        </p>
+        <p>
+            Through <b>technology, transparency, and community-driven initiatives</b>,  
+            we aim to <span class="highlight">save lives and promote a culture of regular blood donation</span>.
+        </p>
+        
+    </div>
+
+</body>
+</html>

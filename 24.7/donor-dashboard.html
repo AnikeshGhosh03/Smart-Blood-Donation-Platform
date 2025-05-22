@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor Dashboard</title>
+    <style>
+        /* Import Font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #000428, #004e92);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        /* Container */
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            width: 90%;
+            max-width: 700px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 30px rgba(255, 255, 255, 0.2);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Fade-In Effect */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        h2, h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            color: #ff4d4d;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0px 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        td {
+            color: white;
+        }
+
+        tbody tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        tbody tr:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transition: 0.3s ease-in-out;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: 0.3s ease-in-out;
+        }
+
+        .accept-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .decline-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .certificate-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 5px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Logout Button */
+        .logout-btn {
+            background: linear-gradient(45deg, #ff4d4d, #ff7300);
+            color: white;
+            padding: 12px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: transform 0.3s ease-in-out;
+            margin-top: 20px;
+        }
+
+        .logout-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 5px 15px rgba(255, 77, 77, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome, <span id="donorName">!</span></h2>
+        <div id="donorInfo">
+            <p>No donor data found. Please login.</p>
+        </div>
+
+        <h3>Hospital Blood Requests</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Hospital</th>
+                    <th>Blood Group</th>
+                    <th>Units</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="hospitalRequestTable">
+                <tr><td colspan="6">No blood requests found.</td></tr>
+            </tbody>
+        </table>
+
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let donor = JSON.parse(localStorage.getItem("currentDonor"));
+        
+            if (donor) {
+                document.getElementById("donorName").innerText = donor.name;
+        
+                let donorDetails = `
+                    <table>
+                        <tr><th>Name</th><td>${donor.name}</td></tr>
+                        <tr><th>Gender</th><td>${donor.gender}</td></tr>
+                        <tr><th>Mobile</th><td>${donor.mobile}</td></tr>
+                        <tr><th>Address</th><td>${donor.address}</td></tr>
+                        <tr><th>Age</th><td>${donor.age}</td></tr>
+                        <tr><th>Email</th><td>${donor.email}</td></tr>
+                        <tr><th>Pincode</th><td>${donor.pincode}</td></tr>
+                    </table>
+                `;
+                document.getElementById("donorInfo").innerHTML = donorDetails;
+            } else {
+                alert("No donor data found. Redirecting to login...");
+                window.location.href = "donor-login.html";
+            }
+
+            let hospitalRequestTable = document.getElementById("hospitalRequestTable");
+            hospitalRequestTable.innerHTML = hospitalRequests.length > 0 ? hospitalRequests.map((req, index) => `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${req.hospitalName}</td>
+                    <td>${req.bloodGroup}</td>
+                    <td>${req.units} Units</td>
+                    <td>${req.date}</td>
+                    <td id="status-${index}">
+                        <button class="btn accept-btn" onclick="acceptRequest(${index})">Accept</button>
+                        <button class="btn decline-btn" onclick="declineRequest(${index})">Decline</button>
+                    </td>
+                </tr>
+            `).join("") : "<tr><td colspan='6'>No blood requests found.</td></tr>";
+        });
+
+        function logout() {
+            localStorage.removeItem("currentDonor");
+            alert("Logged out successfully!");
+            window.location.href = "donor-login.html";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer List</title>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+
+    <style>
+        /* Import Font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #000428, #004e92);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Container */
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 30px rgba(255, 255, 255, 0.2);
+            animation: fadeIn 1s ease-in-out;
+            overflow-x: auto;
+        }
+
+        /* Fade-In Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            color: #ff4d4d;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0px 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.3);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        tbody tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        tbody tr:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transition: 0.3s ease-in-out;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 22px;
+            }
+
+            th, td {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>List of Volunteers</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Skills</th>
+                </tr>
+            </thead>
+            <tbody id="volunteerList"></tbody>
+        </table>
+    </div>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAiiZHWDZS3t-U6ZapmOlGmnioMN3ZBz8k",
+            authDomain: "blood-9fe58.firebaseapp.com",
+            databaseURL: "https://blood-9fe58-default-rtdb.firebaseio.com",
+            projectId: "blood-9fe58",
+            storageBucket: "blood-9fe58.firebasestorage.app",
+            messagingSenderId: "961352833385",
+            appId: "1:961352833385:web:0fa48c7c0c1d23747d85f8",
+            measurementId: "G-H47MNGYY6Z"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // Fetch volunteer data from Firebase
+        db.ref('volunteers/').on('value', (snapshot) => {
+            let volunteerList = document.getElementById('volunteerList');
+            volunteerList.innerHTML = "";
+            
+            snapshot.forEach(childSnapshot => {
+                let data = childSnapshot.val();
+                let row = `<tr>
+                    <td>${data.name || "N/A"}</td>
+                    <td>${data.email || "N/A"}</td>
+                    <td>${data.skills || "N/A"}</td>
+                </tr>`;
+                volunteerList.innerHTML += row;
+            });
+        });
+    </script>
+
+</body>
+</html>

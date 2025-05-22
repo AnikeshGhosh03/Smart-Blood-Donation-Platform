@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor Login</title>
+    <style>
+        /        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #000428, #004e92);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+            flex-direction: column;
+        }
+
+        /* Container */
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 30px rgba(255, 255, 255, 0.2);
+            animation: fadeIn 1s ease-in-out;
+            margin-bottom: 20px;
+        }
+
+        /* Fade-In Effect */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            color: #ff4d4d;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: white;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7); /* Placeholder color */
+            font-size: 14px;
+            outline: none;
+            transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+
+        /* Blood Group & Gender Dropdown */
+        .form-group select {
+            background-color: rgba(255, 255, 255, 0.1); /* Match input background */
+            color: rgba(255, 255, 255, 0.7); /* Placeholder text color */
+            cursor: pointer;
+        }
+
+        /* Ensure selected option appears white */
+        .form-group select:valid {
+            color: white;
+        }
+
+        /* Dropdown Options */
+        .form-group select option {
+            background-color: rgba(255, 255, 255, 0.2); /* Lighter background */
+            color: black; /* Improved visibility */
+        }
+
+        /* Hover Effect */
+        .form-group select option:hover {
+            background-color: #ff7300; /* Keep the hover color same */
+            color: white;
+        }
+
+        /* Eligibility & Login Buttons */
+        .eligibility-btn, .login-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff4d4d, #ff7300);
+            color: white;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            margin-top: 10px;
+        }
+
+        .eligibility-btn:hover, .login-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 5px 15px rgba(255, 77, 77, 0.5);
+        }
+
+        /* Initially hide Login Form */
+        #donorForm {
+            display: none;
+        }
+
+        
+    </style>
+
+    <script>
+        function checkEligibility() {
+            let age = document.getElementById('age').value;
+            let weight = document.getElementById('weight').value;
+            let health = document.getElementById('health').value.toLowerCase();
+            let isThalassemia = document.getElementById('thalassemia').value.toLowerCase();
+            let lastDonationDate = document.getElementById('lastDonation').value;
+
+            // Eligibility Conditions
+            if (age < 18 || weight < 50 || health !== 'yes' || isThalassemia === 'yes') {
+                alert("You are not eligible to donate blood.");
+                return;
+            }
+
+            if (lastDonationDate) {
+                let donationDate = new Date(lastDonationDate);
+                let currentDate = new Date();
+                let diffMonths = (currentDate - donationDate) / (1000 * 3600 * 24 * 30);
+
+                if (diffMonths < 3) {
+                    alert("You can donate blood only if it has been at least 3 months since your last donation.");
+                    return;
+                }
+            }
+
+            alert("You are eligible! Proceed to Donor Login.");
+
+            // Hide Eligibility Form and Show Login Form
+            document.getElementById("eligibilityForm").style.display = "none";
+            document.getElementById("donorForm").style.display = "block";
+        }
+
+            function loginDonor(event) {
+                event.preventDefault(); // Prevent form submission
+                
+                let donor = {
+                    name: document.getElementById("name").value,
+                    gender: document.getElementById("gender").value,
+                    mobile: document.getElementById("mobile").value,
+                    address: document.getElementById("address").value,
+                    age: document.getElementById("age").value,
+                    email: document.getElementById("email").value,
+                    pincode: document.getElementById("pincode").value,
+                    bloodGroup: document.getElementById("bloodGroup").value
+                };
+        
+                // Store in localStorage
+                localStorage.setItem("currentDonor", JSON.stringify(donor));
+        
+                // Redirect to donor dashboard
+                alert("Login Successful! Redirecting to Dashboard...");
+                window.location.href = "donor-dashboard.html";
+            }
+    </script>
+</head>
+<body>
+
+    <!-- Eligibility Form -->
+    <div class="container" id="eligibilityForm">
+        <h2>Check Eligibility</h2>
+        <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="number" id="age" min="18" placeholder="Enter your age" required>
+        </div>
+
+        <div class="form-group">
+            <label for="weight">Weight (kg):</label>
+            <input type="number" id="weight" min="50" placeholder="Enter your weight" required>
+        </div>
+
+        <div class="form-group">
+            <label for="health">Are you in good health? (yes/no):</label>
+            <input type="text" id="health" placeholder="Enter 'yes' or 'no'" required>
+        </div>
+
+        <div class="form-group">
+            <label for="thalassemia">Do you have Thalassemia? (yes/no):</label>
+            <input type="text" id="thalassemia" placeholder="Enter 'yes' or 'no'" required>
+        </div>
+
+        <div class="form-group">
+            <label for="lastDonation">Last Blood Donation Date:</label>
+            <input type="date" id="lastDonation">
+        </div>
+
+        <button class="eligibility-btn" onclick="checkEligibility()">Check Eligibility</button>
+    </div>
+
+    <!-- Donor Login Form -->
+    <div class="container" id="donorForm">
+        <h2>Donor Login</h2>
+        <form onsubmit="loginDonor(event)">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" placeholder="Enter your name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="mobile">Mobile No.:</label>
+                <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" placeholder="Enter 10-digit mobile number" required>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select id="gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" min="18" placeholder="Enter your age" required>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" id="address" placeholder="Enter your address" required>
+            </div>
+
+            <div class="form-group">
+                <label for="pincode">Pin Code:</label>
+                <input type="text" id="pincode" pattern="[0-9]{6}" placeholder="Enter your pin code" required>
+            </div>
+
+            <div class="form-group">
+                <label for="bloodGroup">Blood Group:</label>
+                <select id="bloodGroup" name="bloodGroup" required>
+                    <option value="" disabled selected>Select your blood group</option>
+                     <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                </select>
+            </div>
+
+            <button type="submit" class="login-btn" onclick="loginDonor(event)">Login</button>
+        </form>
+    </div>
+
+</body>
+</html>

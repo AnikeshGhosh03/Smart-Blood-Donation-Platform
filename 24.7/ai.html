@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Donation AI Chatbot</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.6.2/fuse.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #000428, #004e92);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Chat Container */
+        .chat-container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            width: 400px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 30px rgba(255, 255, 255, 0.2);
+            animation: fadeIn 1s ease-in-out;
+            color: white;
+        }
+
+        /* Fade-In Effect */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        h2 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            color: #ff4d4d;
+        }
+
+        /* Chat Box */
+        .chat-box {
+            height: 350px;
+            overflow-y: auto;
+            border-radius: 12px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .message {
+            padding: 10px 14px;
+            border-radius: 10px;
+            max-width: 75%;
+        }
+
+        .user-msg {
+            background: linear-gradient(45deg, #ff4d4d, #ff7300);
+            color: white;
+            align-self: flex-end;
+        }
+
+        .bot-msg {
+            background: white;
+            color: #333;
+            border: 1px solid #ddd;
+            align-self: flex-start;
+        }
+
+        /* Input & Buttons */
+        .input-container {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: 0.3s ease-in-out;
+        }
+
+        input:focus {
+            border-color: #ff4d4d;
+            box-shadow: 0px 0px 8px rgba(255, 77, 77, 0.5);
+        }
+
+        button {
+            padding: 12px 15px;
+            border: none;
+            background: linear-gradient(45deg, #ff4d4d, #ff7300);
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s ease-in-out;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 5px 15px rgba(255, 77, 77, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <h2>Blood Donation AI Chatbot</h2>
+        <div class="chat-box" id="chatBox"></div>
+        <div class="input-container">
+            <input type="text" id="userInput" placeholder="Ask a question...">
+            <button onclick="getResponse()">Send</button>
+            <button onclick="startVoiceInput()">🎤</button>
+        </div>
+    </div>
+
+    <script>
+        const responses = [
+            { question: "Hi", answer: "Hello! How can I assist you today?" },
+            { question: "Where can I donate blood?", answer: "You can donate at your nearest blood bank, hospital, or donation camp." },
+            { question: "Who can donate blood?", answer: "Anyone aged 18-65, weighing at least 50kg, and in good health can donate." },
+            { question: "Can I donate if I have a cold?", answer: "No, you should wait until you are completely recovered before donating." }
+        ];
+
+        const fuse = new Fuse(responses, { keys: ['question'], threshold: 0.3 });
+
+        function getResponse() {
+            let input = document.getElementById("userInput").value.trim();
+            let chatBox = document.getElementById("chatBox");
+            if (input === "") return;
+
+            chatBox.innerHTML += `<div class='message user-msg'>${input}</div>`;
+            let result = fuse.search(input);
+            let response = result.length ? result[0].item.answer : "Sorry, I don't have an answer for that.";
+
+            setTimeout(() => {
+                chatBox.innerHTML += `<div class='message bot-msg'>${response}</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 500);
+
+            document.getElementById("userInput").value = "";
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function startVoiceInput() {
+            let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = "en-US";
+            recognition.start();
+            recognition.onresult = function(event) {
+                let voiceInput = event.results[0][0].transcript;
+                document.getElementById("userInput").value = voiceInput;
+                getResponse();
+            };
+        }
+    </script>
+</body>
+</html>

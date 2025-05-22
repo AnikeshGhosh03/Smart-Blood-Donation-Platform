@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Sign-Up</title>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+
+    <style>
+        /* Import Font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #000428, #004e92);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Container */
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 30px rgba(255, 255, 255, 0.2);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Fade-In Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            color: #ff4d4d;
+        }
+
+        /* Input Fields */
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            outline: none;
+            transition: 0.3s ease-in-out;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        input:focus, select:focus {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Button */
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #ff4d4d, #ff7300);
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 5px 15px rgba(255, 77, 77, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Become a Volunteer</h2>
+        <form id="volunteerForm">
+            <input type="text" id="name" placeholder="Full Name" required>
+            <input type="tel" id="phone" placeholder="Phone Number" required>
+
+            <!-- City Selection -->
+            <select id="city" required></select>
+
+            <button type="submit">Join Now</button>
+        </form>
+    </div>
+
+    <script type="module">
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAiiZHWDZS3t-U6ZapmOlGmnioMN3ZBz8k",
+            authDomain: "blood-9fe58.firebaseapp.com",
+            databaseURL: "https://blood-9fe58-default-rtdb.firebaseio.com",
+            projectId: "blood-9fe58",
+            storageBucket: "blood-9fe58.firebasestorage.app",
+            messagingSenderId: "961352833385",
+            appId: "1:961352833385:web:0fa48c7c0c1d23747d85f8",
+            measurementId: "G-H47MNGYY6Z"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // List of Cities in West Bengal
+        const westBengalCities = [
+            "Kolkata", "Howrah", "Durgapur", "Asansol", "Siliguri", "Darjeeling", "Malda",
+            "Murshidabad", "Nadia", "North 24 Parganas", "South 24 Parganas", "Bankura",
+            "Purulia", "Alipurduar", "Cooch Behar", "Hooghly", "Bardhaman", "Birbhum",
+            "Medinipur", "Kharagpur", "Haldia", "Krishnanagar", "Jalpaiguri", "Baharampur"
+        ];
+
+        document.addEventListener("DOMContentLoaded", function() {
+            let citySelect = document.getElementById("city");
+
+            // Populate city dropdown
+            citySelect.innerHTML = "<option disabled selected>Select Your City</option>";
+            westBengalCities.forEach(city => {
+                let option = document.createElement("option");
+                option.value = city;
+                option.textContent = city;
+                citySelect.appendChild(option);
+            });
+        });
+
+        // Store Volunteer Data in Firebase
+        document.getElementById('volunteerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            let name = document.getElementById('name').value;
+            let phone = document.getElementById('phone').value;
+            let city = document.getElementById('city').value;
+
+            db.ref('volunteers/').push({ name, phone, city })
+                .then(() => {
+                    alert("Thanks for signing up!");
+                    document.getElementById('volunteerForm').reset();
+                })
+                .catch(error => console.error(error));
+        });
+    </script>
+
+</body>
+</html>
